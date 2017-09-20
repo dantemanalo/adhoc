@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AdhocTest < ActiveSupport::TestCase
+class ProdAccountingEntryTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

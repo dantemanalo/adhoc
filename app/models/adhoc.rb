@@ -1,2 +1,0 @@
-class Adhoc < ApplicationRecord
-end
