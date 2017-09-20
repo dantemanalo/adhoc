@@ -1,26 +1,43 @@
+<div class="container">
+
 <p id="notice"><%= notice %></p>
 
-<h1>Prod Accounting Entries</h1>
+<h1>Production: Accounting Entries</h1>
 
 <table class="table" border = 1>
   <thead>
     <tr>
-      <th>Assured No.</th>
+      <th>Policy No.</th>
       <th>Assured Name</th>
+      <th>Client Name</th>
+      <th>Issue Date</th>
+      <th>TSI Amount</th>
+      <th>Premium Amount</th>
+      <th>DST</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @prod_accounting_entries.each do |prod_accounting_entry| %>
+    <% @prod_accounting_entries.each do |pol| %>
       <tr>
-        <td><%= prod_accounting_entry.assd_num %></td>
-        <td><%= prod_accounting_entry.assd_nam %></td>
-        <td><%= link_to 'Show', prod_accounting_entry %></td>
+        <td><%= pol.policy_no %></td>
+        <td><%= pol.assured&.name %></td>
+        <td><%= pol.assured.f_name %> <%= pol.assured.m_initial %>. <%= pol.assured.l_name %> </td>
+        <td><%= pol.iss_date %></td>
+        <td><%= pol.tsi_amount %></td>
+        <td><%= pol.prem_amount %></td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.docstamp %>
+          <% end %>
+        </td>
+        <!-- <td><%#= link_to 'Show', assured %></td> -->
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Prod Accounting Entry', new_prod_accounting_entry_path %>
+<%= paginate @prod_accounting_entries %>
+</div>
+<!--%= link_to 'New Prod Accounting Entry', new_prod_accounting_entry_path %>
