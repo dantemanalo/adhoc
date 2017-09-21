@@ -12,6 +12,9 @@ class Policy < ApplicationRecord
   alias_attribute :renewal_no, :renew_no
   alias_attribute :tsi_amount, :tsi_amt
   alias_attribute :prem_amount, :prem_amt
+  alias_attribute :accounting_entry_date, :acct_ent_date
+  alias_attribute :spoiled_acct_ent_date, :spld_acct_ent_date
+  alias_attribute :crediting_branch, :cred_branch
 
   belongs_to :assured, foreign_key: :assd_no
 
@@ -20,5 +23,9 @@ class Policy < ApplicationRecord
 
   def policy_no
     "#{line_cd}-#{subline_cd}-#{iss_cd}-#{issue_yy}-#{pol_seq_no}-#{renew_no}"
+  end
+
+  def self.accounting_entry_search_date(start_date, end_date)
+    self.where(accounting_entry_date: start_date..end_date).or(self.where(spoiled_acct_ent_date: start_date..end_date)).order('iss_cd','line_cd', 'subline_cd', 'issue_yy', 'pol_seq_no','renew_no')
   end
 end

@@ -4,9 +4,38 @@
 
 <h1>Production: Accounting Entries</h1>
 
+<%= form_tag("search", method: "get") do %>
+<div class='col-md-5'>
+    <div class="form-group">
+      <%= label_tag  "From" %>
+        <div class='input-group date' id='datetimepicker6'>
+            <%= text_field_tag :start_date , params[:start_date], class: 'form-control' %>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    </div>
+</div>
+<div class='col-md-5'>
+    <div class="form-group">
+      <%= label_tag  "To" %>
+        <div class='input-group date' id='datetimepicker7'>
+          <%= text_field_tag :end_date , params[:end_date], class: 'form-control' %>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    </div>
+</div>
+<br>
+<%= submit_tag("Search" , class: 'btn btn-primary') %>
+<%= link_to "Refresh", prod_accounting_entries_path(@prod_accounting_entries), class: 'btn btn-primary' %>
+<% end %>
+
 <table class="table" border = 1>
   <thead>
     <tr>
+      <th>Crediting Branch</th>
       <th>Policy No.</th>
       <th>Assured Name</th>
       <th>Client Name</th>
@@ -20,17 +49,18 @@
   <tbody>
     <% @prod_accounting_entries.each do |pol| %>
       <tr>
+        <td><%= pol.crediting_branch %></td>
         <td><%= pol.policy_no %></td>
         <td><%= pol.assured&.name %></td>
-        <td><%= pol.assured.f_name %> <%= pol.assured.m_initial %>. <%= pol.assured.l_name %> </td>
+        <td><%= pol.assured.f_name %> <%= pol.assured.m_initial %> <%= pol.assured.l_name %> </td>
         <td><%= pol.iss_date %></td>
         <td><%= pol.tsi_amount %></td>
         <td><%= pol.prem_amount %></td>
-        <td>
+
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.docstamp %>
+           <td><%= tax.docstamp %></td>
           <% end %>
-        </td>
+
         <!-- <td><%#= link_to 'Show', assured %></td> -->
       </tr>
     <% end %>

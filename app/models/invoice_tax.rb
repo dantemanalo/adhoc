@@ -11,9 +11,11 @@ class InvoiceTax < ApplicationRecord
   belongs_to :invoice, foreign_key: :prem_seq_no
 
   def docstamp
-    if tax_code = 1
-      then tax_amount
-    else tax_amount = 0
+    if self.tax_code = 1
+      then self.tax_amount
+    else
+      self.tax_amount = 0
     end
   end
+
 end

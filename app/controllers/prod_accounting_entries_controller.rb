@@ -4,7 +4,10 @@ class ProdAccountingEntriesController < ApplicationController
   # GET /prod_accounting_entries
   # GET /prod_accounting_entries.json
   def index
-    @prod_accounting_entries = Policy.limit(10).page(params[:page])
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+  	@prod_accounting_entries = Policy.accounting_entry_search_date(start_date,end_date).page(params[:page])
+    # @prod_accounting_entries = Policy.limit(10).page(params[:page])
   end
 
   # GET /prod_accounting_entries/1

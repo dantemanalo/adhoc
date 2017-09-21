@@ -52,3 +52,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'activerecord-oracle_enhanced-adapter'
 gem 'ruby-oci8'
 gem 'kaminari'
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap3-datetimepicker-rails' , '~> 4.17.47'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'jquery-rails'
+gem 'composite_primary_keys'
