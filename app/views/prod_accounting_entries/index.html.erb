@@ -43,6 +43,17 @@
       <th>TSI Amount</th>
       <th>Premium Amount</th>
       <th>DST</th>
+      <th>Not Stamp</th>
+      <th>VAT</th>
+      <th>PT</th>
+      <th>FST</th>
+      <th>LGT</th>
+      <th>Not Fee</th>
+      <th>OT</th>
+      <th>Doc Inv</th>
+      <th>Inv Rat</th>
+      <th>Serv Fee</th>
+      <th>COCVF</th>
     </tr>
   </thead>
 
@@ -56,12 +67,66 @@
         <td><%= pol.iss_date %></td>
         <td><%= pol.tsi_amount %></td>
         <td><%= pol.prem_amount %></td>
-
+        <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <td><%= tax.docstamp %></td>
+           <%= tax.docstamp %>
           <% end %>
-
-        <!-- <td><%#= link_to 'Show', assured %></td> -->
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.notstamp %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.vat %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.pt %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.fst %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.lgt %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.notfee %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.ot %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.docinv %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.invrat %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.servfee %>
+          <% end %>
+        </td>
+        <td>
+          <% pol.invoice_taxes.each do |tax| %>
+           <%= tax.cocvf %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

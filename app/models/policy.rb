@@ -16,16 +16,15 @@ class Policy < ApplicationRecord
   alias_attribute :spoiled_acct_ent_date, :spld_acct_ent_date
   alias_attribute :crediting_branch, :cred_branch
 
-  belongs_to :assured, foreign_key: :assd_no
-
   has_one :invoice, foreign_key: :policy_id
   has_many :invoice_taxes, through: :invoice
+  belongs_to :assured, foreign_key: :assd_no
 
   def policy_no
     "#{line_cd}-#{subline_cd}-#{iss_cd}-#{issue_yy}-#{pol_seq_no}-#{renew_no}"
   end
 
   def self.accounting_entry_search_date(start_date, end_date)
-    self.where(accounting_entry_date: start_date..end_date).or(self.where(spoiled_acct_ent_date: start_date..end_date)).order('iss_cd','line_cd', 'subline_cd', 'issue_yy', 'pol_seq_no','renew_no')
+    Policy.where(accounting_entry_date: start_date..end_date).or(Policy.where(spoiled_acct_ent_date: start_date..end_date)).includes(:invoice, :invoice_taxes, :assured).order('iss_cd','line_cd', 'subline_cd', 'issue_yy', 'pol_seq_no','renew_no')
   end
 end
