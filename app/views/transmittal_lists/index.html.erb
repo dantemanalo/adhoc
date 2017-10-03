@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Transmittal List: Single Policy</h1>
+
+<%= form_tag("/trans_search", method: "get") do %>
+  <%= label_tag("Policy No.") %>
+  <%= text_field_tag :linecode, nil, :maxlength => 2, :size => 2 %>
+  <%= text_field_tag :sublinecode, nil, :maxlength => 7, :size => 7  %>
+  <%= text_field_tag :issuecode, nil, :maxlength => 2, :size => 2  %>
+  <%= text_field_tag :issueyear, nil, :maxlength => 2, :size => 2   %>
+  <%= text_field_tag :polseqno, nil, :maxlength => 6, :size => 6   %>
+  <%= text_field_tag :renewno, nil, :maxlength => 2, :size => 2   %>
+  <%= submit_tag("Search", class: 'btn btn-primary') %>
+<% end %>
+<br>
+
+<% @transmittal_lists.each do |exp| %>
+  <div>
+  Transmittal of Policy Number <b><%= exp.policy.policy_no %></b><br><br>
+  <b><%= exp.issuesource&.branchname %><br><br></b>
+  <b><%= exp.intermediary&.intermediaryname %> (<%= exp.intermediary&.intermediaryno %>)</b>
+  </div><br>
+
+  <table class="table" border = 1>
+    <thead>
+      <tr>
+        <th>Policy Number</th>
+        <th>Insured Name</th>
+        <th>Expiry Date</th>
+        <!-- <th>Policy ID</th> -->
+        <!-- <th>Line</th>
+        <th>Renew Flag</th> -->
+      </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+          <td><%= exp.policy.policy_no %></td>
+          <td><%= exp.assured&.name %>(<%= exp.assured&.number %>)</td>
+          <td><%= exp.expdate %></td>
+          <!-- <td><%= exp.polid %></td> -->
+          <!-- <td><%= exp.line&.linename %></td>
+          <td><%= exp.renew_flag %></td> -->
+        </tr>
+    </tbody>
+<% end %>
+
+
+
+
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%# @transmittal_lists.each do |transmittal_list| %>
+      <tr>
+        <td><%#= link_to 'Show', transmittal_list %></td>
+        <td><%#= link_to 'Edit', edit_transmittal_list_path(transmittal_list) %></td>
+        <td><%#= link_to 'Destroy', transmittal_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <%# end %>
+  </tbody>
+</table> -->
+<!-- <%#= link_to 'New Transmittal List', new_transmittal_list_path %> -->

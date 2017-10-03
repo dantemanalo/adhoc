@@ -35,14 +35,15 @@
 <table class="table" border = 1>
   <thead>
     <tr>
-      <th>Crediting Branch</th>
+      <!-- <th>Crediting Branch</th> -->
       <th>Policy No.</th>
       <th>Assured Name</th>
       <th>Client Name</th>
       <th>Issue Date</th>
       <th>TSI Amount</th>
       <th>Premium Amount</th>
-      <th>DST</th>
+      <%= content_tag :th, "Tax Breakdown" %>
+      <!-- <th>DST</th>
       <th>Not Stamp</th>
       <th>VAT</th>
       <th>PT</th>
@@ -53,80 +54,85 @@
       <th>Doc Inv</th>
       <th>Inv Rat</th>
       <th>Serv Fee</th>
-      <th>COCVF</th>
+      <th>COCVF</th> -->
     </tr>
   </thead>
 
   <tbody>
     <% @prod_accounting_entries.each do |pol| %>
       <tr>
-        <td><%= pol.crediting_branch %></td>
-        <td><%= pol.policy_no %></td>
+        <!-- <td><%#= pol.crediting_branch %></td> -->
+        <td><%= link_to pol.policy_no, p %></td>
         <td><%= pol.assured&.name %></td>
         <td><%= pol.assured.f_name %> <%= pol.assured.m_initial %> <%= pol.assured.l_name %> </td>
         <td><%= pol.iss_date %></td>
         <td><%= pol.tsi_amount %></td>
         <td><%= pol.prem_amount %></td>
         <td>
+          <% pol.invoice.invoice_taxes.where(issue_code: pol.invoice.issue_code, line_code: pol.line_code).each do |t| %>
+            <%= content_tag :p, "#{t.tax_name.name}: #{currency(t.tax_amount)}" %>
+          <% end %>
+        </td>
+        <!-- <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.docstamp %>
+           <%#= tax.docstamp %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.notstamp %>
+           <%#= tax.notstamp %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.vat %>
+           <%#= tax.vat %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.pt %>
+           <%#= tax.pt %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.fst %>
+           <%#= tax.fst %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.lgt %>
+           <%#= tax.lgt %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.notfee %>
+           <%#= tax.notfee %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.ot %>
+           <%#= tax.ot %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.docinv %>
+           <%#= tax.docinv %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.invrat %>
+           <%#= tax.invrat %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.servfee %>
+           <%#= tax.servfee %>
           <% end %>
         </td>
         <td>
           <% pol.invoice_taxes.each do |tax| %>
-           <%= tax.cocvf %>
+           <%#= tax.cocvf %>
           <% end %>
-        </td>
+        </td> -->
       </tr>
     <% end %>
   </tbody>

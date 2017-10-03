@@ -15,13 +15,17 @@ class Policy < ApplicationRecord
   alias_attribute :accounting_entry_date, :acct_ent_date
   alias_attribute :spoiled_acct_ent_date, :spld_acct_ent_date
   alias_attribute :crediting_branch, :cred_branch
+  alias_attribute :policyflag, :pol_flag
+  alias_attribute :endorsement_iss_cd, :endt_iss_cd
+  alias_attribute :endorsement_year, :endt_yy
+  alias_attribute :endorsement_seq_no, :endt_seq_no
 
   has_one :invoice, foreign_key: :policy_id
   has_many :invoice_taxes, through: :invoice
   belongs_to :assured, foreign_key: :assd_no
 
   def policy_no
-    "#{line_cd}-#{subline_cd}-#{iss_cd}-#{issue_yy}-#{pol_seq_no}-#{renew_no}"
+    "#{line_cd}-#{subline_cd}-#{iss_cd}-#{issue_yy}-#{pol_seq_no}-#{renew_no} #{"/" if self.endorsement_year?} #{self.endorsement_iss_cd if self.endorsement_year?} #{"-" if self.endorsement_year?} #{self.endorsement_year if self.endorsement_year?} #{"-" if self.endorsement_year?} #{endorsement_seq_no if self.endorsement_year?}"
   end
 
   def self.accounting_entry_search_date(start_date, end_date)

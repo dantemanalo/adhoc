@@ -6,9 +6,9 @@
 #
 default: &default
   adapter: oracle_enhanced
-  host: 172.16.110.8
+  host: 172.16.110.31
   port: 1521
-  database: DEMO
+  database: FTEST
   username: CPI
   password: CPI12345!
   #adapter: sqlite3
@@ -18,9 +18,9 @@ default: &default
 development:
   <<: *default
   adapter: oracle_enhanced
-  host: 172.16.110.8
+  host: 172.16.110.31
   port: 1521
-  database: DEMO
+  database: FTEST
   #database: db/development.sqlite3
 
 # Warning: The database defined as "test" will be erased and
@@ -28,8 +28,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: DEMO
+  database: FTEST
 
 production:
   <<: *default
-  database: DEMO
+  database: FTEST
