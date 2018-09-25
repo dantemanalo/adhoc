@@ -10,5 +10,6 @@ class Assured < ApplicationRecord
   alias_attribute :l_name, :last_name
 
   has_many :policies, foreign_key: :assd_no
+  has_many :claims, foreign_key: :assd_no
   belongs_to :expiry, foreign_key: :assd_no
 end

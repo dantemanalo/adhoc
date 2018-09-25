@@ -1,0 +1,75 @@
+<div class="container">
+  <p id="notice"><%= notice %></p>
+
+  <h4>Renewal Details of Policy Number <b><%= @details.policy_no %></b></h4>
+    Branch: <%= @details.issuesource&.branchname %><br><br>
+    <%= content_tag :p, "Intermediary: <b>#{@details.expiry.intermediary&.name} (#{@details.expiry.intermediary&.number})</b>".html_safe %>
+    <%= @details.expiry.intermediary&.billing_address %><br><br>
+
+    <div class="floating-box">
+      <table>
+        <tr>
+          <%= content_tag :td, "Insured:", align: "left" %>
+          <%= content_tag :td, "<b>#{@details.assured&.name} (#{@details.assured&.number})</b>".html_safe, align: "left" %>
+        </tr>
+        <tr>
+          <%= content_tag :td, "Address:", align: "left" %>
+          <%= content_tag :td, "#{@details.complete_address}", align: "left" %>
+        </tr>
+        <tr>
+          <%= content_tag :td, "Expiry Date:", align: "left" %>
+          <%= content_tag :td, "<b>#{format_date(@details.expirydate)}</b>".html_safe, align: "left" %>
+        </tr>
+      </table>
+      <table  class="table">
+        <th></th>
+        <%= content_tag :th, "TSI Amount" %>
+        <%= content_tag :th, "Premium Amount" %>
+        <% @details.old_peril_groups.each do |peril| %>
+          <tr>
+            <% peril.perils.where(linecode: @details.linecode).each do |pn| %>
+                <%= content_tag :td, pn.name, align: "left" %>
+              <% end %>
+            <%= content_tag :td, format_currency(peril.tsi_amount), align: "right" %>
+            <%= content_tag :td, format_currency(peril.premium), align: "right" %>
+          </tr>
+        <% end %>
+      </table>
+      <table class="table">
+        <% @details.old_taxes.each do |tax| %>
+          <tr>
+            <%= content_tag :td, tax.type, align: "left" %>
+            <td></td>
+            <%= content_tag :td, format_currency(tax.amount), align: "right" %>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="floating-box">
+        <%= content_tag :p, "Model: #{@details.expiry.item_title}" if @details.expiry.item_title && @details.linecode=='MC' %>
+        <%= content_tag :p, "Plate No.: #{@details.expiry.plate_no}" if @details.expiry.plate_no %>
+        <%= content_tag :p, "Serial No.: #{@details.expiry.serialno}" if @details.expiry.serialno %>
+        <%= content_tag :p, "Color: #{@details.expiry.color}" if @details.expiry.color %>
+        <%= content_tag :p, "Motor: #{@details.expiry.motor_no}" if @details.expiry.motor_no %>
+        <%= content_tag :p, "Location of Risk: #{@details.expiry.location_of_risk}" if @details.expiry.loc_risk1 %>
+        <table class="table">
+          <tr>
+            <%= content_tag :td, "Total Premium:", align: "left" %>
+            <% @details.old_peril_groups.uniq.each do |prem| %>
+              <%= content_tag :td, format_currency(prem.total_premium(@details)), align: "right" %>
+          </tr>
+              <% @details.old_taxes.uniq.each do |policy| %>
+            <tr>
+                <%= content_tag :td, "Total Charges:", align: "left" %>
+                <%= content_tag :td, format_currency(policy.total_taxes(@details)), align: "right" %>
+            </tr>
+            <tr>
+                <%= content_tag :td, "Gross:", align: "left" %>
+                <%= content_tag :td, "<b>#{format_currency(prem.total_premium(@details) + policy.total_taxes(@details))}</b>".html_safe, align: "right" %>
+            </tr>
+                <% end %>
+              <% end %>
+        </table>
+      <div class="after-box"><%= link_to 'Back', url_for(:back), class: 'btn btn-primary' %></div>
+    </div>
+</div>

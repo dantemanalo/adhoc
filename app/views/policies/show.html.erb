@@ -1,0 +1,61 @@
+<div class="container">
+  <p id="notice"><%= notice %></p>
+
+  <h1>Policy Details</h1><br>
+    Policy No.: <b><%= @prod_accounting_entry.policy_no %></b><br>
+    Assured: <b><%= @prod_accounting_entry.assured&.name %></b>
+    <br><br>
+  <div id="left">
+    <table>
+      <tr>
+        <td id="r">Address: </td>
+        <td id="l"> <b><%= @prod_accounting_entry.complete_address %></b></td>
+      </tr>
+      <tr>
+        <td id="r">Region: </td>
+        <td id="l"> <b><%= @prod_accounting_entry.region_name&.description %></b></td>
+      </tr>
+      <tr>
+        <td id="r">Crediting Branch: </td>
+        <td id="l"> <b><%= @prod_accounting_entry.issuesource&.branchname %></b></td>
+      </tr>
+      <tr>
+        <td id="r">Booking Date: </td>
+        <td id="l"> <b><%= @prod_accounting_entry.booking_date %></b></td>
+      </tr>
+      <tr>
+        <td id="r">Take-up Term: </td>
+        <td id="l"> <b><%= @prod_accounting_entry.take_up_term %></b></td>
+      </tr>
+      <tr>
+        <td id="r">Incept Date: </td>
+        <td id="l"> <b><%= @prod_accounting_entry.inceptdate %></b></td>
+      </tr>
+      <tr>
+        <td id="r">Expiry Date: </td>
+        <td id="l"> <b><%= @prod_accounting_entry.expirydate %></b></td>
+      </tr>
+      <tr>
+        <td id="r">Issue Date: </td>
+        <td id="l"> <b><%= @prod_accounting_entry.issuedate %></b></td>
+      </tr>
+      <tr>
+        <td id="r">Effectivity Date: </td>
+        <td id="l"> <b><%= @prod_accounting_entry.effectivitydate %></b></td>
+      </tr>
+    </table>
+    <br>
+    Ref. Policy No.: <b><%= @prod_accounting_entry.ref_policy_no %></b><br>
+    Premium Amount: <b><%= @prod_accounting_entry.prem_amount %></b><br>
+    TSI: <b><%= @prod_accounting_entry.tsi_amount %></b><br><br>
+    <%= link_to 'Back', url_for(:back), class: 'btn btn-primary' %>
+    <br>
+  </div><br><br>
+  <div id="right">
+    <% @prod_accounting_entry.endorsements.each do |info| %>
+      Endt Expiry Date: <b><%= info.policy.endtexpirydate %></b><br><br>
+      Endorsement Information:<br>
+      <b><%= info.endt_info %></b>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>List of Undistributed Policies</h1>
+<hr>
+  <%= search_form_for @q, builder: SimpleForm::FormBuilder, url: policies_undistributed_path do |f| %>
+    <%= f.input :month_lteq %>
+
+    <%= f.submit "Search", class: 'btn btn-primary' %>
+  <% end %>
+  <hr>
+  <table class="table">
+      <tr>
+        <%= content_tag :th, "Policy Number" %>
+        <%= content_tag :th, "Insured Name" %>
+        <%= content_tag :th, "Inception Date" %>
+        <%= content_tag :th, "Premium Amount" %>
+      </tr>
+    <tbody>
+      <% @undistributed_policies.each do |policy| %>
+        <tr>
+          <td>
+            <%= content_tag :p, policy.policy_no %>
+            <%= content_tag :p, "Endorsement: #{policy.endorsement_no}", class: 'small label label-primary' if policy.endorsement_no %>
+          </td>
+          <%= content_tag :td, shorten(policy.assured&.name, 30) %>
+          <%= content_tag :td, format_date(policy.inceptdate) %>
+          <%= content_tag :td, format_currency(policy.prem_amount), align: 'right' %>
+          <%= content_tag :td, policy.booking_date %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<br>
+<%= page_entries_info @undistributed_policies %><br>
+<%= paginate @undistributed_policies %>

@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Posted Documents Count</h1>
+
+<%= search_form_for @q, builder: SimpleForm::FormBuilder, url: policies_posted_docs_count_path, html: { class: 'form-inline' } do |f| %>
+  <%= f.date_field :status_date_gteq, class: 'form-control input-sm' %>
+  <%= f.date_field :status_date_lteq, class: 'form-control input-sm' %>
+  <%= f.input :name_cont, label: 'User', input_html: { style: "text-transform:uppercase" }, required: false %>
+  <%= f.submit "Search", class: 'btn btn-primary' %>
+  <%= link_to 'Refresh', request.path %>
+<% end %>
+
+  <hr>
+  <table class="table">
+      <tr>
+        <%= content_tag :th, "Date" %>
+        <%= content_tag :th, "Total Number of Posted Documents" %>
+      </tr>
+    <tbody>
+      <% @posted_count.group_by(&:status_date).each do |day, record| %>
+        <tr>
+          <%= content_tag :td, format_date(day) %>
+          <%= content_tag :td, record.count %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<br>
+
+<%#= page_entries_info @posted_count %><br>
+<%#= paginate @posted_count %>

@@ -1,0 +1,86 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">ADHOC REPORTS</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Accounting <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/policies/policy_count">Policy Count</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Underwriting <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/open_policies/index">Marine Open Policies</a></li>
+            <li class="menu-item dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Renewal Notice</a>
+              <ul class="dropdown-menu">
+                <li><a href="/renewal_notice/single">Single Policy</a></li>
+                <li><a href="/renewal_notice/perbranch">Per Branch</a></li>
+                <li><a href="/renewal_notice/perintm">Per Intermediary</a></li>
+              </ul>
+            </li>
+            <li><a href="/policies/negated">List of Negated Policies</a></li>
+            <li><a href="/policies/undistributed">List of Undistributed Policies</a></li>
+            <li><a href="/policies/non_marine_treaty">Non-Marine Treaty Distribution Checklist</a></li>
+            <li><a href="/policies/posted_docs_count">Posted Documents Count</a></li>
+            <li class="menu-item dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Policy Register</a>
+              <ul class="dropdown-menu">
+                <li><a href="/policies/surety_register">Surety</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Marketing <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/policies/prod_acct_entry">Production - Accounting Entries</a></li>
+            <li><a href="/top_producers">Top Producers</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Claims <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/incurred_losses/by_assured">Losses by Assured</a></li>
+          </ul>
+        </li>
+
+      </ul>
+      <!-- <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form> -->
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/">Exit</a></li>
+        <!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

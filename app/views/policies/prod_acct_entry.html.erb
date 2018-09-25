@@ -1,0 +1,58 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Production Register: Accounting Entries</h1>
+
+<%= form_tag("/search", method: "get") do %>
+
+<%= render 'datepicker' %>
+
+<div class='col-md-3'>
+    <div class="form-group">
+      <%= label_tag  "Assured No. " %>
+        <div id="">
+          <%= text_field_tag :number, params[:number], class: 'form-control' %>
+        </div>
+    </div>
+</div><br>
+  <%= submit_tag("Search" , class: 'btn btn-primary') %>
+  <%= link_to "Print (CSV)", policies_prod_acct_entry_path(@prod_accounting_entries, format: 'csv', :start_date => params[:start_date], :end_date => params[:end_date]), class: 'btn btn-default' %>
+<% end %>
+
+<table class="table" border = 1>
+  <thead>
+    <tr>
+      <th>Policy No.</th>
+      <th>Assured Name and Number</th>
+      <!-- <th>Client Name</th> -->
+      <th>Issue Date</th>
+      <th>Booking Date</th>
+      <th>TSI Amount</th>
+      <th>Premium Amount</th>
+      <%= content_tag :th, "Tax Breakdown" %>
+      <!-- <th>Accounting Entry Date</th> -->
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @prod_accounting_entries.each do |pol| %>
+      <tr>
+        <%= content_tag :td, link_to(pol.policy_no, policies_show_path(id: pol.id)) %>
+        <td><%= pol.assured&.name %> (<%= pol.assured&.number %>)</td>
+        <!-- <td><%#= pol.assured.f_name %> <%= pol.assured.m_initial %> <%= pol.assured.l_name %> </td> -->
+        <%= content_tag :td, format_date(pol.iss_date) %>
+        <%= content_tag :td, pol.booking_date %>
+        <%= content_tag :td, format_currency(pol.tsi_amount) %>
+        <%= content_tag :td, format_currency(pol.prem_amount) %>
+        <td>
+          <% pol.invoice.invoice_taxes.where(issue_code: pol.invoice.issue_code, line_code: pol.linecode).each do |t| %>
+            <%= content_tag :p, "#{t.tax_name.name}: #{currency(t.amount)}" %>
+          <% end %>
+        </td>
+        <!-- <td><%#= format_date(pol.accounting_entry_date) %></td> -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= render 'layouts/pagination', object: @prod_accounting_entries %>

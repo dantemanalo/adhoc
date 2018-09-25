@@ -14,3 +14,139 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import 'bootstrap-datetimepicker';
+
+.floating-box {
+ width: 500px; //change this to whatever required
+ height: 300px;
+ float: left;
+ margin: 10px;
+ // border: 3px solid #73AD21;
+}
+
+.after-box {
+  clear: left;
+}
+
+#left {
+width: 600px; //change this to whatever required
+float: left;
+}
+
+#r {
+  text-align: right;
+}
+
+#l {
+  // border: 1px solid #ddd;
+  padding: 5px;
+}
+
+tr {
+  padding: 5px;
+}
+
+.btn-default {
+height: 40px !important;
+}
+
+.btn-primary {
+height: 40px !important;
+}
+
+/* Style the tab */
+div.tab {
+   overflow: hidden;
+   border: 1px solid #ccc;
+   background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+   background-color: inherit;
+   float: left;
+   border: none;
+   outline: none;
+   cursor: pointer;
+   padding: 14px 16px;
+   transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+   background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+   background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+   display: none;
+   padding: 6px 12px;
+   border: 1px solid #ccc;
+   border-top: none;
+}
+
+.dropdown-submenu{position:relative;}
+
+.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+
+.dropdown-submenu:hover>.dropdown-menu{display:block;}
+
+.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+
+.dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+
+.dropdown-submenu.pull-left{float:none;}
+
+.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+
+.simple_form {
+  $indent: 120px;
+  label {
+    float: left;
+    width: $indent - 20px;
+    text-align: right;
+    margin: 2px 10px;
+    &.radio, &.checkbox {
+      float: none;
+      margin: 0;
+      width: auto;
+      text-align: left;
+    }
+    &.checkbox {
+      display: block;
+      margin-left: $indent;
+    }
+    &.radio {
+      margin-right: 10px;
+    }
+  }
+  div.input {
+    margin-bottom: 10px;
+  }
+  input.radio_buttons, input.check_boxes {
+    margin-right: 5px;
+  }
+  .btn {
+    margin-left: $indent;
+  }
+  .alert-error {
+    color: #D00;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .hint, .error {
+    clear: left;
+    margin-left: $indent;
+    font-size: 12px;
+    color: #D00;
+    display: block;
+  }
+  .hint {
+    color: #555;
+    font-style: italic;
+  }
+}

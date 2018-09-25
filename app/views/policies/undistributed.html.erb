@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<h1>List of Undistributed Policies</h1>
+<hr>
+
+  <%= search_form_for @q, builder: SimpleForm::FormBuilder, url: policies_undistributed_path, html: { class: 'form-inline' } do |f| %>
+    <%= f.input :month_eq, label: 'Booking Month', collection: Policy::BOOKING_MONTHS, required: false %>
+    <%= f.input :year_eq, label: 'Booking Year', collection: Policy::BOOKING_YEARS, required: false %>
+    <%= f.input :assured_name_cont, label: 'Assured', input_html: { style: "text-transform:uppercase" }, required: false %>
+    <%= f.label :line, required: false %>
+    <%= f.collection_select :line_linecode_cont, Line.all, "linecode", "linename", include_blank: 'ALL LINES', required: false %>
+    <%= f.collection_select :policy_distribution_flag_not_in, PolicyDistribution::FLAG, :to_s, :to_s, {selected: ['3', '4']}, { multiple: true } %>
+
+    <%= f.submit "Search", class: 'btn btn-primary' %>
+    <%= link_to 'Refresh', request.path %>
+  <% end %>
+
+  <hr>
+  <table class="table">
+      <tr>
+        <%= content_tag :th, "Policy Number" %>
+        <%= content_tag :th, "Insured Name" %>
+        <%= content_tag :th, "Inception Date" %>
+        <%= content_tag :th, "Premium Amount" %>
+        <%= content_tag :th, "TSI Amount" %>
+        <%= content_tag :th, "Booking Date" %>
+      </tr>
+    <tbody>
+      <% @undistributed_policies.each do |policy| %>
+        <tr>
+          <td>
+            <%= content_tag :p, policy.policy_no %>
+            <%= content_tag :p, "Endorsement: #{policy.endorsement_no}", class: 'small label label-primary' if policy.endorsement_no %>
+          </td>
+          <%= content_tag :td, shorten(policy.assured&.name, 30) %>
+          <%= content_tag :td, format_date(policy.inceptdate) %>
+          <%= content_tag :td, format_currency(policy.prem_amount), align: 'right' %>
+          <%= content_tag :td, format_currency(policy.tsi_amount), align: 'right' %>
+          <%= content_tag :td, policy.booking_date %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<br>
+<%= page_entries_info @undistributed_policies %><br>
+<%= paginate @undistributed_policies %>

@@ -1,0 +1,45 @@
+<div class="container">
+<p id="notice"><%= notice %></p>
+
+  <div id="Single">
+    <h3>Renewal Notice: Single Policy</h3><br>
+
+        <%= form_tag("/trans_single", method: "get") do %>
+          <%= label_tag("Policy No.") %>
+          <%= text_field_tag :linecode, nil, :maxlength => 2, :size => 2, :required => true, style: 'text-transform:uppercase'  %>
+          <%= text_field_tag :sublinecode, nil, :maxlength => 7, :size => 7, :required => true, style: 'text-transform:uppercase'   %>
+          <%= text_field_tag :issuecode, nil, :maxlength => 2, :size => 2, :required => true, style: 'text-transform:uppercase'   %>
+          <%= text_field_tag :issueyear, nil, :maxlength => 2, :size => 2, :required => true %>
+          <%= text_field_tag :polseqno, nil, :maxlength => 6, :size => 6, :required => true %>
+          <%= text_field_tag :renewno, nil, :maxlength => 2, :size => 2, :required => true %>
+          <%= submit_tag("Search", class: 'btn btn-primary') %>
+        <% end %>
+        <br>
+        <% @transmittal.each do |exp| %>
+          <div>
+            Transmittal of Policy Number
+              <b><%= link_to(exp.policy.policy_no, renewal_notice_show_path(id: exp.policy.id)) %></b><br><br>
+            Branch: <b><%= exp.issuesource&.branchname %><br><br></b>
+            Intermediary: <b><%= exp.intermediary&.name %> (<%= exp.intermediary&.number %>)</b>
+          </div><br>
+
+          <table class="table" border = 1>
+            <thead>
+              <tr>
+                <th>Policy Number</th>
+                <th>Assured Name with Assured Number</th>
+                <th>Expiry Date</th>
+              </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                  <td><%= link_to(exp.policy.policy_no, renewal_notice_show_path(id: exp.policy.id)) %></td>
+                  <td><%= exp.assured&.name %>(<%= exp.assured&.number %>)</td>
+                  <td><%= format_date(exp.expdate) %></td>
+                </tr>
+            </tbody>
+          </table>
+        <% end %>
+  </div>
+</div>

@@ -23,4 +23,32 @@ class Expiry < ApplicationRecord
   def self.policy_search(linecode, sublinecode, issuecode, issueyear, polseqno, renewno)
     Expiry.where(linecode: linecode, sublinecode: sublinecode, issuecode: issuecode, issueyear: issueyear, polseqno: polseqno, renewno: renewno).order('line_cd', 'subline_cd', 'iss_cd', 'issue_yy', 'pol_seq_no','renew_no')
   end
+
+  def self.search_date(start_date, end_date)
+    self.where(expdate: start_date..end_date).includes(:policy).order('expiry_date')
+  end
+
+  def self.search_by_branch(branchcode)
+      self.where(issuecode: branchcode)
+  end
+
+  def self.search_by_intermediary(intermediaryno)
+      self.where(intermediaryno: intermediaryno)
+  end
+
+  def self.search_by_line(linecode)
+      self.where(linecode: linecode)
+  end
+
+  def self.search_by_line(linecode)
+    if linecode.present?
+      self.where(linecode: linecode)
+    else
+      self.where(linecode)
+    end
+  end
+
+  def location_of_risk
+    "#{loc_risk1} #{loc_risk2} #{loc_risk3}"
+  end
 end

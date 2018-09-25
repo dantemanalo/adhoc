@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>List of Undistributed Policies</h1>
+<hr>
+
+  <%= search_form_for @q, builder: SimpleForm::FormBuilder, url: policies_non_marine_treaty_path, html: { class: 'form-inline' } do |f| %>
+    <%= f.input :month_eq, label: 'Booking Month', collection: Policy::BOOKING_MONTHS, required: false %>
+    <%= f.input :year_eq, label: 'Booking Year', collection: Policy::BOOKING_YEARS, required: false %>
+    <%= f.submit "Search", class: 'btn btn-primary' %>
+    <%= link_to 'Refresh', request.path %>
+  <% end %>
+
+  <hr>
+  <table class="table">
+      <tr>
+        <%= content_tag :th, "Policy Number" %>
+        <%= content_tag :th, "Peril Name" %>
+      </tr>
+    <tbody>
+      <% @non_marine_distributions.each do |policy| %>
+        <tr>
+          <td>
+            <%= content_tag :p, policy.policy_no %>
+            <%= content_tag :p, "Endorsement: #{policy.endorsement_no}", class: 'small label label-primary' if policy.endorsement_no %>
+          </td>
+          <%= content_tag :td, policy.booking_date %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<br>
+<%= page_entries_info @non_marine_distributions %><br>
+<%= paginate @non_marine_distributions %>

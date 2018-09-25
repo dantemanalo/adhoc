@@ -1,0 +1,54 @@
+<div class="container">
+<p id="notice"><%= notice %></p>
+
+  <div id="Branch">
+    <h3>Renewal Notice: Per Branch</h3><br>
+
+    <%= form_tag("/trans_branch", method: "get") do %>
+
+    <%= render 'datepicker' %>
+
+    <div class='col-md-3'>
+        <div class="col-xs-6">
+          <%= label_tag  "Branch Code " %>
+            <div id="">
+              <%= text_field_tag :branchcode, params[:branchcode], class: 'form-control ', :required => true, style: 'text-transform:uppercase', :maxlength => 2 %>
+            </div>
+        </div>
+    </div>
+    <div class='col-md-3'>
+        <div class="col-xs-11">
+          <%= label_tag  "Line" %>
+              <%= select_tag(:linecode, options_for_select([['ALL LINES', ''], ['FIRE', 'FI'], ['MOTORCAR', 'MC'], ['PERSONAL ACCIDENT', 'PA'], ['CASUALTY', 'CA'], ['MARINE', 'MN'], ['ENGINEERING', 'EN']],
+                selected: params[:linecode]), class: 'form-control' )%>
+        </div>
+    </div><br>
+    <%= submit_tag("Search" , class: 'btn btn-primary') %>
+  <% end %><br>
+
+    <table class="table" border = 1>
+      <thead>
+        <tr>
+          <th>Policy Number</th>
+          <th>Assured Name with Assured Number</th>
+          <th>Expiry Date</th>
+        </tr>
+      </thead>
+
+    <% @transmittal_lists_branch.where(policy_id: @policy).each do |exp| %>
+        <tbody>
+          <tr>
+              <% if exp.policy.policy_no.present? %>
+                <td><b><%= link_to(exp.policy.policy_no, renewal_notice_show_path(id: exp.policy.id)) %></b></td>
+                <td><%= exp.assured&.name %> (<%= exp.assured&.number %>)</td>
+                <td><%= format_date(exp.expdate) %></td>
+              <% end %>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+
+<%= page_entries_info @transmittal_lists_branch %><br>
+<%= paginate @transmittal_lists_branch %>
+</div>

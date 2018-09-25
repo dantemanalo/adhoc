@@ -1,0 +1,41 @@
+<h1>Losses by Assured</h1>
+
+<%= search_form_for @q, builder: SimpleForm::FormBuilder, url: request.path, html: { class: 'form-inline' } do |f| %>
+  <%= f.input :name_cont, label: "Assured Name ", required: false %>
+  <%= f.input :number_eq, label: "Assured No ", required: false %>
+  <%= f.date_field :policies_accounting_entry_date_gteq, class: 'form-control input-sm' %>
+  <%= f.date_field :policies_accounting_entry_date_lteq, class: 'form-control input-sm' %>
+  <%= f.submit "Search", class: 'btn btn-primary' %>
+<% end %>
+
+<table class="table mt-5">
+  <thead>
+    <%= content_tag :th, 'Assured No' %>
+    <%= content_tag :th, 'Assured Name' %>
+    <%= content_tag :th, 'Policies' %>
+    <%= content_tag :th, 'Premium', colspan: 2 %>
+    <%= content_tag :th, 'Claims', colspan: 2 %>
+  </thead>
+
+  <tbody>
+    <% @assureds.each do |assured| %>
+      <% @policies = assured.policies.group_by(&:linecode) %>
+      <tr>
+        <%= content_tag :td, assured.number, rowspan: "#{@policies.count + 1}"  %>
+        <%= content_tag :td, assured.name, rowspan: "#{@policies.count + 1}"  %>
+      </tr>
+
+      <% @policies.each do |linecode, policy| %>
+        <tr>
+          <%= content_tag :td, linename(linecode) %>
+          <%= content_tag :td, format_currency(policy.sum(&:prem_amount)) %>
+          <%= content_tag :td, policy.count %>
+          <%#= content_tag :td, assured.claims.where(line: linecode).count  %>
+          <%#= content_tag :td, format_currency(assured.claims.paid)  %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render 'layouts/pagination', object:  @assureds %>

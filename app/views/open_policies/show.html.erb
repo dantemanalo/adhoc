@@ -1,0 +1,33 @@
+<h1>Risk Notes of MOP No: <%= @marine_open_policies.collect(&:mop_no).uniq %></h1><br>
+
+<table class="table" border = 1>
+  <thead>
+    <tr>
+      <th>Risk Note Number</th>
+      <th>Issue Date</th>
+      <th>Effectivity Date</th>
+      <th>Expiry Date</th>
+      <th>TSI Amount</th>
+      <th>Premium Amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @risk_notes.each do |rn| %>
+      <tr>
+         <td>
+            <b><%= content_tag :p, rn.policy_no %></b>
+            <%= content_tag :p, "Endorsement: #{rn.endorsement_no}", class: 'small label label-primary' if rn.endorsement_no %>
+          </td>
+          <td><%= format_date(rn.issuedate) %></td>
+          <td><%= format_date(rn.effectivitydate) %></td>
+          <td><%= format_date(rn.expirydate) %></td>
+          <td><%= format_currency(rn.tsi_amount) %></td>
+          <td><%= format_currency(rn.prem_amount) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= page_entries_info @risk_notes %><br>
+<%= paginate @risk_notes %><br>
+<%= link_to 'Back to Search', open_policies_index_path %>

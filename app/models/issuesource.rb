@@ -5,4 +5,5 @@ class Issuesource < ApplicationRecord
   alias_attribute :branchname, :iss_name
 
   belongs_to :expiry, foreign_key: :iss_cd
+  belongs_to :policy, foreign_key: :iss_cd
 end

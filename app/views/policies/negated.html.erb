@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>List of Negated Policies</h1>
+
+  <hr>
+  <table class="table">
+      <tr>
+        <%= content_tag :th, "Policy Number" %>
+        <%= content_tag :th, "Accounting Entry Date" %>
+        <%= content_tag :th, "Premium Amount" %>
+      </tr>
+    <tbody>
+      <% @negated_policies.each do |policy| %>
+        <tr>
+          <td>
+            <%= content_tag :p, policy.policy_no %>
+            <%= content_tag :p, "Endorsement: #{policy.endorsement_no}", class: 'small label label-primary' if policy.endorsement_no %>
+          </td>
+          <%= content_tag :td, format_date(policy.accounting_entry_date) %>
+          <%= content_tag :td, format_currency(policy.prem_amount), align: 'right' %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<br>
+<%= page_entries_info @negated_policies %><br>
+<%= paginate @negated_policies %>

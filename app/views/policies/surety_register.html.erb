@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Policy Register for Surety</h1>
+<hr>
+
+  <%= search_form_for @q, builder: SimpleForm::FormBuilder, url: policies_surety_register_path, html: { class: 'form-inline' } do |f| %>
+  <%= f.date_field :iss_date_gteq, class: 'form-control input-sm' %>
+  <%= f.date_field :iss_date_lteq, class: 'form-control input-sm' %>
+
+    <%= f.submit "Search", class: 'btn btn-primary' %>
+    <%= link_to 'Refresh', request.path %>
+  <% end %>
+
+  <hr>
+  <table class="table">
+      <tr>
+        <%= content_tag :th, "Policy Number" %>
+        <%= content_tag :th, "Assured Name" %>
+        <%= content_tag :th, "TSI Amount" %>
+        <%= content_tag :th, "Premium Amount" %>
+        <%= content_tag :th, "Rate" %>
+      </tr>
+    <tbody>
+      <% @policies.each do |policy| %>
+        <tr>
+          <td>
+            <%= content_tag :p, policy.policy_no %>
+            <%= content_tag :p, "Endorsement: #{policy.endorsement_no}", class: 'small label label-primary' if policy.endorsement_no %>
+          </td>
+          <%= content_tag :td, shorten(policy.assured&.name, 30) %>
+          <%= content_tag :td, format_currency(policy.tsi_amount), align: 'right' %>
+          <%= content_tag :td, format_currency(policy.prem_amount), align: 'right' %>
+          <% policy.item_perils.each do |item_peril| %>
+            <%= content_tag :td, item_peril.total_premium_rate(policy), align: 'right' %>
+            <% break %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<br>
+<%= page_entries_info @policies %><br>
+<%= paginate @policies %>

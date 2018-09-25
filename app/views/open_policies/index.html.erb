@@ -1,0 +1,15 @@
+<h1>Search for Marine Open Policy (MOP) - Risk Notes</h1><br>
+
+<%= form_tag open_policies_show_path, method: "get" do %>
+  <%= label_tag("Open Policy No.") %>
+  <%= text_field_tag :linecode, nil, :maxlength => 2, :size => 2, :required => true, style: 'text-transform:uppercase' %>
+  <%= text_field_tag :sublinecode, nil, :maxlength => 7, :size => 7, :required => true, style: 'text-transform:uppercase' %>
+  <%= text_field_tag :issuecode, nil, :maxlength => 2, :size => 2, :required => true, style: 'text-transform:uppercase' %>
+  <%= text_field_tag :issueyear, nil, :maxlength => 2, :size => 2, :required => true %>
+  <%= text_field_tag :polseqno, nil, :maxlength => 6, :size => 6, :required => true %>
+  <%= text_field_tag :renewno, nil, :maxlength => 2, :size => 2, :required => true %><br><br>
+
+  <%= render 'datepicker' %><br>
+
+  <%= submit_tag("Search" , class: 'btn btn-primary') %>
+<% end %>

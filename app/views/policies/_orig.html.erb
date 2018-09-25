@@ -1,0 +1,34 @@
+<h1>Policy Count</h1>
+
+<%= search_form_for @q, builder: SimpleForm::FormBuilder, url: request.path, html: { class: 'form-inline' } do |f| %>
+  <%= f.date_field :iss_date_gteq %>
+  <%= f.date_field :iss_date_lteq %>
+  <%= f.submit "Search", class: 'btn btn-primary' %>
+  <%= link_to 'Refresh', request.path %>
+<% end %>
+
+<table class="table" border = 1>
+  <% @policies.group_by { |p| p.iss_date.beginning_of_month }.sort.each do |month, policies| %>
+  <thead>
+    <tr>
+      <%= content_tag :td, "Line", rowspan: 2 %>
+      <%= content_tag :td, "Count" %>
+    </tr>
+    <tr>
+
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <%= content_tag :td %>
+      </tr>
+      <% policies.group_by(&:linecode).each do |linecode, policies| %>
+        <tr>
+          <%= content_tag :td, linecode %>
+          <%= content_tag :td, policies.count %>
+        </tr>
+      <% end %>
+  </tbody>
+  <% end %>
+</table>

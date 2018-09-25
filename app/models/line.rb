@@ -6,4 +6,6 @@ class Line < ApplicationRecord
   alias_attribute :linecode, :line_cd
 
   belongs_to :expiry, foreign_key: :line_cd
+  belongs_to :policy, foreign_key: :line_cd
+  has_many :claims, foreign_key: :line_cd
 end

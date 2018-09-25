@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Top Producers</h1>
+
+<%= form_tag("/top_search", method: "get") do %>
+  <%= render 'datepicker' %>
+  <div class='col-md-3'>
+      <div class="col-xs-6">
+        <%= label_tag  "Branch Code " %>
+        <%= text_field_tag :issuecode, params[:issuecode], class: 'form-control ', style: 'text-transform:uppercase', :maxlength => 2 %>
+      </div>
+  </div>
+  <div class='col-md-3'>
+      <div class="col-xs-6">
+        <%#= label_tag  "Top " %>
+        <%#= text_field_tag :no_of_records, params[:no_of_records], class: 'form-control ' %>
+      </div>
+  </div>
+  <%= submit_tag("Search" , class: 'btn btn-primary') %>
+<% end %>
+<br>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <%#= content_tag :td %>
+      <%= content_tag :td, "Crediting Branch" %>
+      <%= content_tag :td, "Agent" %>
+      <%#= content_tag :td, "New Business" %>
+      <%#= content_tag :td, "Renewal" %>
+      <%= content_tag :td, "Premium" %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoices.group_by(&:intm_no).each do |intermediary, invoices| %>
+      <tr>
+        <%#= content_tag :td, invoice.policy_id %>
+        <% for invoice in invoices %>
+          <%= content_tag :td, invoice.policy.issuesource.branchname %>
+          <%= content_tag :td, invoice.intermediary.name %>
+          <% break %>
+        <% end %>
+        <%= content_tag :td, format_currency(invoices.collect(&:premium).sum) %>
+
+        <%# case policy.renewno
+       when 0
+         then
+          case policy.policy_type.description.include? "RENEWAL"
+          when 0
+            then policy.prem_amount
+
+      %>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+<%#= render 'layouts/pagination', object: @invoices %>
